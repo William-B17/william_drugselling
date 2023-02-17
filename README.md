@@ -4,7 +4,7 @@ This script creates a unique way to sell drugs to npcs but only in certian zones
 
 ## Requirements
 
-- [progressBars](couldn't find sorry)
+- [mythic_progbar](https://github.com/mythicrp/mythic_progbar)
 
 - [mythic_notify](https://github.com/mythicrp/mythic_notify)
 
