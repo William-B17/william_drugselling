@@ -8,7 +8,7 @@ RegisterServerEvent('william_drugselling:getcount')
 AddEventHandler('william_drugselling:getcount', function()
     local xPlayer = ESX.GetPlayerFromId(source)
     local _source = source
-    local count = 1
+    local count = 0
 
     for i,j in pairs(drugtypes) do
         local has = xPlayer.getInventoryItem(j).count
@@ -31,11 +31,6 @@ AddEventHandler('william_drugselling:getuserdrugs', function()
         ["purple_weed"]={225,275},
     }
 
-
-    local itemnames       = {"kokain","amfetamin","hash","skunk","haze"}
-    local drugcount       = {}
-    local sellcount       = {}
-    local sellprice       = {}
 
     local druginfo        = {}
 
