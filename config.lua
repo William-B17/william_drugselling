@@ -9,3 +9,5 @@ Config.notnotif = "Personen er ikke interesseret!"
 Config.nodrugs = "Du har ikke nogle stoffer på dig!"
 Config.cop = 'Personen har set dig før, de ved, at du er betjent!'
 Config.walkaway = 'Du handlede sketchy (gik væk), og personen er ikke længere interesseret'
+Config.ProgBar = 'mythic_progbar'
+Config.nofif = 'mythic_notify'
