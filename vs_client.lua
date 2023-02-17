@@ -61,8 +61,8 @@ function AddPropToPlayer(ped,prop1, bone, off1, off2, off3, rot1, rot2, rot3)
     SetModelAsNoLongerNeeded(prop1)
   end
 
-RegisterNetEvent('w:animation')
-AddEventHandler('w:animation', function(x,z,ped,n1,n2,n3,n4,n5,n6,n7,n8)
+RegisterNetEvent('william_drugselling:animation')
+AddEventHandler('william_drugselling:animation', function(x,z,ped,n1,n2,n3,n4,n5,n6,n7,n8)
 	RequestAnimDict(x)
 	while (not HasAnimDictLoaded(x)) do Citizen.Wait(0) end
 	TaskPlayAnim(ped,x,z,100.0, 200.0, 0.3, 120, 0, 0, 0, 0)
@@ -77,7 +77,6 @@ AddEventHandler('william_drugselling:popo', function()
     local dispatchData = {dispatchData = data, caller = 'Alarm', coords = vector3(GetEntityCoords(PlayerPedId()))}
     TriggerServerEvent('wf-alerts:svNotify', dispatchData)
 end)
-
 
 local info = {}
 local druggs = {}
@@ -97,7 +96,9 @@ end)
 
 Citizen.CreateThread(function()
     Wait(1)
-    local PlayerPos = GetEntityCoords(PlayerPedId())
+
+    TriggerServerEvent('william_drugselling:getcount')
+
     while true do
         Wait(1)
         local playerPed = PlayerPedId()
@@ -123,52 +124,76 @@ Citizen.CreateThread(function()
                                                     oldped = ped
                                                     Wait(200)
                                                     if IsPedStill(playerPed) then
-                                                        local selectedpercentage = math.random(1, 3)
+                                                        local selectedpercentage = math.random(1, 4)
                                                         TriggerServerEvent('william_drugselling:getcount')
-                                                        TriggerServerEvent('william_drugselling:getcount')
+                                                        Wait(1000)
                                                         if count > 0 then
                                                             count = 0
                                                             if(info["job"]~="police") then
                                                                 SetEntityAsMissionEntity(ped)
                                                                 TaskStandStill(ped, 100.0)
-                                                                exports['progressBars']:startUI(3500, Config.sellingtext)
+                                                                exports[Config.ProgBar]:Progress(
+                                                                        {
+                                                                            name = "unique_action_name",
+                                                                            duration = 3500,
+                                                                            label = Config.sellingtext,
+                                                                            useWhileDead = false,
+                                                                            canCancel = true,
+                                                                            controlDisables = {
+                                                                                disableMovement = true,
+                                                                                disableCarMovement = true,
+                                                                                disableMouse = false,
+                                                                                disableCombat = true
+                                                                            }
+                                                                        }
+                                                                    )
                                                                 Wait(3500)
                                                                 if (selectedpercentage==1) then
                                                                     TaskStandStill(ped, 100.0)
                                                                     Wait(100)
-
-                                                                    exports['progressBars']:startUI(2000, Config.sellingtext2)
+                                                                    exports[Config.ProgBar]:Progress(
+                                                                        {
+                                                                            name = "unique_action_name",
+                                                                            duration = 2000,
+                                                                            label = Config.sellingtext2,
+                                                                            useWhileDead = false,
+                                                                            canCancel = true,
+                                                                            controlDisables = {
+                                                                                disableMovement = true,
+                                                                                disableCarMovement = true,
+                                                                                disableMouse = false,
+                                                                                disableCombat = true
+                                                                            }
+                                                                        }
+                                                                    )
+                                                                    Wait(1000)
                                                                     TaskLookAtCoord(ped, GetEntityCoords(playerPed))
                                                                     TaskLookAtCoord(playerPed, GetEntityCoords(ped))
-                                                                    TriggerEvent('w:animation',"mp_common","givetake1_a",ped,"prop_cash_pile_02", 28422, 0.0,  0.01, 0.04, 0.0, 0.0, 0.0) -- 
-                                                                    TriggerEvent('w:animation',"mp_common","givetake1_b",playerPed,"prop_paper_bag_small", 28422, 0.15,  0.0, 0.0, 90.0, 0.0, -90.0)
-                                                                    Wait(1800)
+                                                                    TriggerEvent('william_drugselling:animation',"mp_common","givetake1_a",ped,"prop_cash_pile_02", 28422, 0.0,  0.01, 0.04, 0.0, 0.0, 0.0) -- 
+                                                                    TriggerEvent('william_drugselling:animation',"mp_common","givetake1_b",playerPed,"prop_paper_bag_small", 28422, 0.15,  0.0, 0.0, 90.0, 0.0, -90.0)
+                                                                    Wait(1000)
                                                                     DestroyAllProps()
-                                                                    Wait(2000)
                                                                     TriggerServerEvent('william_drugselling:getuserdrugs')
-                                                                    Wait(200)
                                                                     SetPedAsNoLongerNeeded(oldped)
-
                                                                 elseif (selectedpercentage==2) then
-                                                                    exports['mythic_notify']:DoHudText('inform', Config.poponotif, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
+                                                                    exports[Config.nofif ]:DoHudText('inform', Config.poponotif, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
                                                                     TriggerEvent("william_drugselling:popo")
                                                                     SetPedAsNoLongerNeeded(oldped)
                                                                 else
-                                                                    exports['mythic_notify']:DoHudText('inform', Config.notnotif, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
+                                                                    exports[Config.nofif ]:DoHudText('inform', Config.notnotif, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
                                                                     SetPedAsNoLongerNeeded(oldped)
                                                                 end
                                                             else
                                                                 SetPedAsNoLongerNeeded(oldped)
-                                                                exports['mythic_notify']:DoHudText('inform', Config.cop, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
+                                                                exports[Config.nofif ]:DoHudText('inform', Config.cop, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
                                                             end
                                                         else
-                                                            exports['mythic_notify']:DoHudText('inform', Config.nodrugs, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
-                                                            TriggerServerEvent('william_drugselling:getcount')
+                                                            exports[Config.nofif ]:DoHudText('inform', Config.nodrugs, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
                                                             SetPedAsNoLongerNeeded(oldped)
                                                         end
                                                     else                                            
                                                         SetPedAsNoLongerNeeded(oldped)
-                                                        exports['mythic_notify']:DoHudText('inform', Config.walkaway, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
+                                                        exports[Config.nofif ]:DoHudText('inform', Config.walkaway, { ['background-color'] = '#aa0000', ['color'] = '#FFFFFF' })
                                                     end
                                                 end
                                             end
