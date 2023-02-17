@@ -1,0 +1,11 @@
+Config = {}
+Config.text = "Tryk ~r~E ~w~for at sælge stoffer"
+Config.policetitle = "Narkotika"
+Config.policeinfo  = "Nogen anmeldte et salg af narkotika"
+Config.sellingtext = "Forhandler..."
+Config.sellingtext2 = "Sælger narkotika..."
+Config.poponotif = "Personen ringer til politiet!"
+Config.notnotif = "Personen er ikke interesseret!"
+Config.nodrugs = "Du har ikke nogle stoffer på dig!"
+Config.cop = 'Personen har set dig før, de ved, at du er betjent!'
+Config.walkaway = 'Du handlede sketchy (gik væk), og personen er ikke længere interesseret'
