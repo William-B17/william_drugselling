@@ -8,9 +8,12 @@ This script creates a unique way to sell drugs to npcs but only in certian zones
 
 - [mythic_notify](https://github.com/mythicrp/mythic_notify)
 
+- [linden_outlawalert](https://github.com/thelindat/linden_outlawalert)
 
 ## Installation
 
 1. Under config.lua edit the config's to your liking
 
 2. Remember to add william_drugselling to your server.cfg
+
+3. Remember to install dependencies.
